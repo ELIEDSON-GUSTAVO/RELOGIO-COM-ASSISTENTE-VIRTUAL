@@ -1,0 +1,16 @@
+void textToSpeech(String text) {
+  HTTPClient http;
+  http.begin("URL_DA_API_TTS"); // URL da API de TTS
+  http.addHeader("Content-Type", "application/json");
+  http.addHeader("Authorization", String("Bearer ") + apiKey);
+
+  String postData = "{\"text\":\"" + text + "\"}";
+  int httpResponseCode = http.POST(postData);
+
+  if (httpResponseCode > 0) {
+    // Processar o áudio retornado e reproduzir
+  } else {
+    Serial.println("Erro na conversão de texto para fala");
+  }
+  http.end();
+}
