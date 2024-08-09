@@ -1,0 +1,20 @@
+void loop() {
+  Serial.println("Aguardando comando de voz...");
+  String userInput = speechToText(); // Captura e converte a fala em texto
+
+  if (userInput.indexOf("quarta-feira") != -1) {
+    Serial.println("Sim senhor"); // Resposta padrão ao comando "quarta-feira"
+    textToSpeech("Sim senhor"); // Converte "Sim senhor" para áudio
+
+    // Aguarda outro comando de pesquisa
+    userInput = speechToText(); // Captura novo comando
+
+    if (!userInput.isEmpty()) {
+      // Envia a nova pesquisa para a API do Gemini
+      String geminiResponse = getGeminiResponse(userInput);
+      Serial.println("Gemini: " + geminiResponse);
+      textToSpeech(geminiResponse); // Responde em áudio
+    }
+  }
+  delay(5000); // Aguarda antes de reiniciar o loop
+}
