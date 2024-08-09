@@ -1,0 +1,20 @@
+#include <HTTPClient.h>
+
+String speechToText() {
+  // Implementação de captura de áudio e envio para API de reconhecimento de fala
+  HTTPClient http;
+  http.begin("URL_DA_API_DE_RECONHECIMENTO_DE_FALA"); // URL da API de reconhecimento
+  http.addHeader("Authorization", "Bearer SUA_CHAVE_API");
+
+  // Supondo que enviamos dados de áudio
+  int httpResponseCode = http.GET(); // Use POST se enviar dados de áudio
+
+  String response;
+  if (httpResponseCode > 0) {
+    response = http.getString(); // Extraia o texto da resposta
+  } else {
+    response = "Erro ao converter fala para texto";
+  }
+  http.end();
+  return response;
+}
