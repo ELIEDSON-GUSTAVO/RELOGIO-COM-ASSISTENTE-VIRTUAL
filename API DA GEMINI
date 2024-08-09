@@ -1,0 +1,21 @@
+const char* geminiApiEndpoint = "https://api.gemini.com/v1/your-endpoint";
+const char* apiKey = "SUA_CHAVE_API";
+
+String getGeminiResponse(String prompt) {
+  HTTPClient http;
+  http.begin(geminiApiEndpoint);
+  http.addHeader("Content-Type", "application/json");
+  http.addHeader("Authorization", String("Bearer ") + apiKey);
+
+  String postData = "{\"query\":\"" + prompt + "\"}"; // Formato específico do Gemini
+  int httpResponseCode = http.POST(postData);
+
+  String response;
+  if (httpResponseCode > 0) {
+    response = http.getString(); // Extraia a resposta do Gemini
+  } else {
+    response = "Erro ao conectar ao Gemini";
+  }
+  http.end();
+  return response;
+}
